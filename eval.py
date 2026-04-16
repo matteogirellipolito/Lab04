@@ -1,5 +1,9 @@
 import plotly.graph_objects as go
-from utils.utils import models_accuracy
+import json
+
+# Carica le accuracy salvate da train.py
+with open("models_accuracy.json", "r") as f:
+    models_accuracy = json.load(f)
 
 tags = ('fnn', 'cnn', 'scrambled_cnn', 'scrambled_fnn')
 accuracy_list = [models_accuracy[tag] for tag in tags]
