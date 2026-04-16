@@ -3,6 +3,10 @@ from dataset.cifar10 import train_loader, test_loader, input_size, n_channels, o
 from models.models import FC2Layer, CNN
 from utils.utils import fit, get_model_optimizer, count_parameters
 
+import wandb
+
+wandb.init(project="Lab04")
+
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print(f'Using device: {device}')
 

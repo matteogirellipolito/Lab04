@@ -3,6 +3,7 @@ import torch.nn.functional as F
 from typing import Optional, Callable, Dict, Union
 from tqdm.notebook import tqdm, trange
 import torch.optim as optim
+import wandb
 
 def permute_pixels(images: torch.Tensor, perm: Optional[torch.Tensor]) -> torch.Tensor:
     """ Permutes the pixel in each image in the batch
@@ -150,6 +151,12 @@ def fit(
             f"Accuracy: {test_out['correct']}/{len(test_dl.dataset)} "
             f"({test_out['accuracy']:.0f}%)\n"
         )
+        wandb.log({
+            f"{tag}_train_loss": train_loss_averager(None),
+            f"{tag}_test_loss": test_out['loss_averager'](None),
+            f"{tag}_accuracy": test_out['accuracy'],
+            "epoch": epoch
+        })
     return test_out['accuracy']
 
 def get_model_optimizer(model: torch.nn.Module) -> torch.optim.Optimizer:
